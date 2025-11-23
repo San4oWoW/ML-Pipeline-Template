@@ -1,0 +1,25 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - data/raw/iris.csv
+    - params.yaml
+    - src/prepare.py
+    outs:
+    - data/processed
+  train:
+    cmd: python src/train.py
+    deps:
+    - data/processed/train.csv
+    - params.yaml
+    - src/train.py
+    outs:
+    - models/model.pkl
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - data/processed/test.csv
+    - models/model.pkl
+    - src/evaluate.py
+    outs:
+    - metrics/metrics.json
